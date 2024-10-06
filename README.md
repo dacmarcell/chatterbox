@@ -1,18 +1,16 @@
 # ChatterBox
 
-ChatterBox é um aplicativo de chat em tempo real desenvolvido com FastAPI e WebSocket. Ele permite que os usuários se comuniquem de forma instantânea e eficiente, proporcionando uma experiência de chat simples e interativa.
+ChatterBox é um aplicativo de chat em tempo real desenvolvido com WebSockets utilizando FastAPI. Ele permite que os usuários se comuniquem de forma instantânea e eficiente, proporcionando uma experiência de chat simples e interativa.
 
 ## 🔍 Funcionalidades
 
 - **Comunicação em Tempo Real**: Utilize WebSockets para comunicação bidirecional instantânea entre clientes e servidor.
 - **Interface Amigável**: Design responsivo e intuitivo, com uso do Bootstrap para estilização.
-- **Notificações Flutuantes**: Notificações que aparecem no canto inferior da tela sempre que uma nova mensagem é recebida.
-- **Empilhamento de Notificações**: As notificações são empilhadas, garantindo que mensagens não sejam perdidas.
+- **Notificações**: Notificações que aparecem no canto inferior da tela sempre que uma nova mensagem é recebida.
 
 ## ⚙️ Tecnologias Utilizadas
 
 - **FastAPI**: Framework web moderno e rápido para a construção de APIs.
-- **WebSocket**: Protocolo que permite comunicação em tempo real.
 - **HTML5 & CSS3**: Estrutura e estilo da aplicação.
 - **Bootstrap**: Framework CSS para design responsivo.
 
@@ -21,11 +19,11 @@ ChatterBox é um aplicativo de chat em tempo real desenvolvido com FastAPI e Web
 1. **Clone o repositório:**
 
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   git clone https://github.com/dacmarcell/chatterbox
    cd chatterbox
    ```
 
-2. **Crie um ambiente virtual (opcional, mas recomendado):**
+2. **Crie um ambiente virtual (recomendado):**
 
    ```bash
    python -m venv venv
