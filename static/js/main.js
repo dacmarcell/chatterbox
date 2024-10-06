@@ -1,7 +1,10 @@
 let client_id = Date.now();
 const ws = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
 
+let messageInput = document.getElementById("messageText");
 document.querySelector("#ws-id").textContent = client_id;
+
+messageInput.focus();
 
 ws.onmessage = (e) => {
   const messages = document.getElementById("messages");
@@ -22,18 +25,16 @@ ws.onerror = (e) => {
 };
 
 const sendMessage = () => {
-  let input = document.getElementById("messageText");
-
-  if (!input.value) {
+  if (!messageInput.value) {
     alert("Write a message");
     return;
   }
 
   if (ws.readyState === WebSocket.OPEN) {
-    ws.send(input.value);
+    ws.send(messageInput.value);
   } else {
     alert("WebSocket is not open. Cannot send message.");
   }
 
-  input.value = "";
+  messageInput.value = "";
 };
