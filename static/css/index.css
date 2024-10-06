@@ -33,6 +33,11 @@ body {
 .message-list li:nth-child(odd) {
   background-color: #d6d8db;
 }
+
+.error-message {
+  text-align: center;
+}
+
 .send-message {
   display: flex;
   margin-top: 20px;

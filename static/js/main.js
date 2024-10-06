@@ -17,11 +17,16 @@ ws.onmessage = (e) => {
 };
 
 ws.onclose = (e) => {
-  alert("Connection closed");
+  const errorMessage = document.getElementById("errorMessage");
+  errorMessage.style.display = "block";
+  errorMessage.textContent =
+    "Conexão encerrada. Por favor, recarregue a página.";
 };
 
 ws.onerror = (e) => {
-  alert("WebSocket error:", e);
+  const errorMessage = document.getElementById("errorMessage");
+  errorMessage.style.display = "block";
+  errorMessage.textContent = "Ocorreu um erro na conexão. Tente novamente.";
 };
 
 const sendMessage = () => {
