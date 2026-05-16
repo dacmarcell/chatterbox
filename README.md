@@ -33,7 +33,7 @@ ChatterBox é um aplicativo de chat em tempo real desenvolvido com WebSockets ut
 3. **Instale as dependências:**
 
    ```bash
-   pip install fastapi uvicorn
+   pip install fastapi 'uvicorn[standard]'
    ```
 
 ## 🚀 Execução
