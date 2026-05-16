@@ -8,12 +8,48 @@ messageInput.focus();
 
 ws.onmessage = (e) => {
   const messages = document.getElementById("messages");
+  const chatBody = document.getElementById("chatBody");
   const message = document.createElement("li");
-  message.classList.add("list-group-item");
-  const content = document.createTextNode(e.data);
-  message.appendChild(content);
+  
+  let rawText = e.data;
+  let textContent = rawText;
+  
+  // Analisar o remetente com base no padrão do servidor
+  if (rawText.startsWith("You wrote: ")) {
+    message.classList.add("my-message");
+    textContent = rawText.replace("You wrote: ", "");
+  } else if (rawText.startsWith("Client #") && rawText.includes(" says: ")) {
+    message.classList.add("other-message");
+    // Opcionalmente podemos mostrar o ID do outro cliente
+    // textContent = rawText; // já mostra "Client #... says: ..."
+    // Ou apenas remover o "says: " e estilizar
+    let parts = rawText.split(" says: ");
+    if (parts.length > 1) {
+        let senderId = parts[0].replace("Client #", "");
+        textContent = `<span style="font-size: 0.75rem; opacity: 0.7; display: block; margin-bottom: 2px;">User ${senderId}</span>${parts.slice(1).join(" says: ")}`;
+        message.innerHTML = textContent; // Usando innerHTML para permitir o spanzinho
+    }
+  } else if (rawText.includes("has left the chat")) {
+    message.classList.add("system-message");
+    textContent = rawText;
+  } else {
+    // Fallback
+    message.classList.add("other-message");
+    textContent = rawText;
+  }
+
+  if (!message.innerHTML) {
+      const content = document.createTextNode(textContent);
+      message.appendChild(content);
+  }
+  
   messages.appendChild(message);
-  messages.scrollTop = messages.scrollHeight;
+  
+  // Smooth scroll
+  chatBody.scrollTo({
+    top: chatBody.scrollHeight,
+    behavior: 'smooth'
+  });
 };
 
 ws.onclose = (e) => {
@@ -30,8 +66,7 @@ ws.onerror = (e) => {
 };
 
 const sendMessage = () => {
-  if (!messageInput.value) {
-    alert("Write a message");
+  if (!messageInput.value.trim()) {
     return;
   }
 
@@ -42,4 +77,5 @@ const sendMessage = () => {
   }
 
   messageInput.value = "";
+  messageInput.focus();
 };
