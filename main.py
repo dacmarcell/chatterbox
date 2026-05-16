@@ -22,9 +22,10 @@ class ConnectionManager:
     async def send_personal_message(self, message: str, websocket: WebSocket):
         await websocket.send_text(message)
 
-    async def broadcast(self, message: str):
+    async def broadcast(self, message: str, exclude: WebSocket = None):
         for connection in self.active_connections:
-            await connection.send_text(message)
+            if connection != exclude:
+                await connection.send_text(message)
 
 manager = ConnectionManager()
 
@@ -40,7 +41,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
         while True:
             data = await websocket.receive_text()
             await manager.send_personal_message(f"You wrote: {data}", websocket)
-            await manager.broadcast(f"Client #{client_id} says: {data}")
+            await manager.broadcast(f"Client #{client_id} says: {data}", exclude=websocket)
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         await manager.broadcast(f"Client #{client_id} has left the chat")
