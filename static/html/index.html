@@ -4,43 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChatterBox</title>
-    <!-- We no longer strictly need Bootstrap since we wrote custom CSS, but we can keep it for normalization if we want, or just rely on our CSS -->
     <link href="/static/css/index.css" rel="stylesheet" />
+    <!-- Emoji Picker Web Component -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
   </head>
   <body>
-    <div class="chat-container">
-      <div class="chat-card">
+    <!-- Modal de Login -->
+    <div class="login-overlay" id="loginModal">
+      <div class="login-card">
+        <h2>Welcome to ChatterBox</h2>
+        <p>Please enter your name to join the chat</p>
+        <form id="loginForm" onsubmit="event.preventDefault(); joinChat()">
+          <input type="text" id="usernameInput" placeholder="Your Name" required autocomplete="off" maxlength="20" />
+          <button type="submit">Join Chat</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Interface Principal -->
+    <div class="app-layout" id="appLayout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          Online Users (<span id="userCount">0</span>)
+        </div>
+        <ul class="user-list" id="userList">
+          <!-- Usuarios online aparecerao aqui -->
+        </ul>
+      </aside>
+
+      <!-- Chat Container -->
+      <main class="chat-container">
         <div class="chat-header">
           <h2>ChatterBox</h2>
-          <p>Online • ID: <span id="ws-id"></span></p>
         </div>
         <div class="chat-body" id="chatBody">
           <ul id="messages" class="message-list"></ul>
-          <div
-            class="error-message"
-            id="errorMessage"
-            style="display: none;"
-          ></div>
+          
+          <div class="typing-indicator-container" id="typingIndicator">
+            <span id="typingUsersText">Someone is typing...</span>
+          </div>
         </div>
         <div class="chat-footer">
-          <form
-            class="send-message"
-            action=""
-            onsubmit="event.preventDefault(); sendMessage(event)"
-          >
+          <emoji-picker id="emojiPicker"></emoji-picker>
+          <form class="send-message" onsubmit="event.preventDefault(); sendMessage()">
+            <button type="button" class="emoji-btn" id="emojiBtn">😀</button>
             <input
               type="text"
               id="messageText"
               placeholder="Type a message..."
               autocomplete="off"
             />
-            <button type="submit" aria-label="Send">
+            <button type="submit" class="send-btn" aria-label="Send">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
             </button>
           </form>
         </div>
-      </div>
+      </main>
     </div>
+
     <script src="/static/js/main.js"></script>
   </body>
 </html>
